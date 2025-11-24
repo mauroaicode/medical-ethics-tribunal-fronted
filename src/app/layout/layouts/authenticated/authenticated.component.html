@@ -4,9 +4,10 @@
 
   <!-- Main Content Area -->
   <div
-    class="flex flex-1 flex-col min-w-0 transition-all duration-300"
+    class="flex flex-1 flex-col min-w-0 transition-all duration-300 w-full relative z-10"
     [class.ml-64]="sidebar?.isOpen() && !sidebar?.isMobile()"
     [class.ml-16]="!sidebar?.isOpen() && !sidebar?.isMobile()"
+    [class.ml-0]="sidebar?.isMobile()"
   >
     <!-- Header -->
     <app-header

@@ -11,16 +11,17 @@
 
 <!-- Sidebar -->
 <aside
-  class="fixed left-0 top-0 z-40 h-screen bg-neutral text-neutral-content transition-all duration-300 ease-in-out shadow-lg"
+  class="fixed left-0 top-0 z-40 bg-neutral text-neutral-content transition-all duration-300 ease-in-out shadow-lg"
   [class.-translate-x-full]="!isOpen() && isMobile()"
   [class.translate-x-0]="isOpen() || !isMobile()"
   [class.w-64]="isOpen()"
   [class.w-16]="!isOpen() && !isMobile()"
+  style="height: 100vh; max-height: 100vh;"
 >
   <div class="flex h-full flex-col overflow-hidden">
     <!-- Sidebar Header -->
     <div
-      class="flex h-16 items-center text-center border-b border-neutral/20 transition-all"
+      class="flex h-16 flex-shrink-0 items-center text-center border-b border-neutral/20 transition-all"
       [class.justify-between]="isOpen()"
       [class.justify-center]="!isOpen()"
       [class.px-4]="isOpen()"
@@ -62,7 +63,7 @@
     </div>
 
     <!-- Navigation Items -->
-    <nav class="flex-1 overflow-y-auto transition-all"
+    <nav class="flex-1 overflow-y-auto overflow-x-hidden transition-all min-h-0"
          [class.p-4]="isOpen()"
          [class.p-2]="!isOpen()">
       <ul class="space-y-1">
@@ -180,7 +181,6 @@
                 [class.px-3]="isOpen()"
                 [class.justify-center]="!isOpen()"
                 [class.px-2]="!isOpen()"
-                (click)="navigateTo(item)"
               >
                 @if (item.icon) {
                   <span class="flex-shrink-0 flex items-center justify-center">

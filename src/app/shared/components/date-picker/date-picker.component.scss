@@ -1,0 +1,17 @@
+// Date picker specific styles
+.date-picker-container {
+  position: relative;
+}
+
+// Ensure calendar dropdown is properly positioned
+:host {
+  display: block;
+  width: 100%;
+}
+
+// Calendar dropdown styles
+.calendar-dropdown {
+  min-width: 320px;
+  max-width: 320px;
+}
+

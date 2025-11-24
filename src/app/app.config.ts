@@ -9,6 +9,7 @@ import { AVAILABLE_LANGUAGES } from './core/transloco/languages.constants';
 import { TranslocoHttpLoader } from './core/transloco/transloco.http-loader';
 import { THEME_CONFIG } from './core/config/theme.config';
 import { authInterceptor } from './core/interceptors/auth/auth.interceptor';
+import { ngrokInterceptor } from './core/interceptors/headers/ngrok.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -16,7 +17,7 @@ export const appConfig: ApplicationConfig = {
     provideZonelessChangeDetection(),
     provideHttpClient(
       withFetch(),
-      withInterceptors([authInterceptor])
+      withInterceptors([ngrokInterceptor, authInterceptor])
     ),
     provideRouter(routes),
     

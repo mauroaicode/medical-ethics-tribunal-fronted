@@ -83,13 +83,13 @@ export class SignInComponent implements OnInit {
         this._authService.signIn({ email, password })
       );
 
-      // Save token and user
+      // Save token and user FIRST, before any navigation
       this._authService.accessToken = response.token;
       this._authService.currentUser = response.user;
 
       this.alertType.set('success');
       this.alertMessage.set('auth.success.login');
-      this._isDirectMessage.set(false)
+      this._isDirectMessage.set(false);
       this.showAlert.set(true);
 
       await this.redirectToAdmin(response.user);
@@ -193,5 +193,6 @@ export class SignInComponent implements OnInit {
       this._router.navigate([ROUTES_ADMIN.DASHBOARD]);
     }, 1000);
   }
+
 }
 

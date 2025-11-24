@@ -1,0 +1,148 @@
+<div class="w-full space-y-6">
+  <!-- Page Header -->
+  <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+    <div>
+      <h1 class="text-2xl font-bold text-base-content md:text-3xl">
+        {{ 'process.title' | transloco }}
+      </h1>
+      <p class="mt-1 text-sm text-base-content/70">
+        {{ 'process.description' | transloco }}
+      </p>
+    </div>
+    <button
+      type="button"
+      class="btn btn-accent btn-sm sm:btn-md"
+      (click)="onCreateProcess()"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="h-5 w-5"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M12 4v16m8-8H4"
+        />
+      </svg>
+      {{ 'process.create' | transloco }}
+    </button>
+  </div>
+
+  <!-- Filters -->
+  <div class="card bg-base-100 shadow-sm">
+    <div class="card-body">
+      <h2 class="card-title text-lg mb-4">{{ 'process.filters.title' | transloco }}</h2>
+      <form [formGroup]="filterForm" class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-5">
+        <!-- Process Number Filter -->
+        <div class="form-control filter-input-wrapper">
+          <label class="label">
+            <span class="label-text">{{ 'process.filters.processNumber' | transloco }}</span>
+          </label>
+          <input
+            type="text"
+            formControlName="process_number"
+            class="input input-bordered input-sm filter-input filter-input-primary"
+            [placeholder]="'process.filters.processNumberPlaceholder' | transloco"
+          />
+        </div>
+
+        <!-- Complainant Document Number Filter -->
+        <div class="form-control filter-input-wrapper">
+          <label class="label">
+            <span class="label-text">{{ 'process.filters.complainantDocument' | transloco }}</span>
+          </label>
+          <input
+            type="text"
+            formControlName="complainant_document_number"
+            class="input input-bordered input-sm filter-input filter-input-secondary"
+            [placeholder]="'process.filters.complainantDocumentPlaceholder' | transloco"
+          />
+        </div>
+
+        <!-- Doctor Filter -->
+        <div class="form-control filter-input-wrapper">
+          <app-searchable-select
+            [options]="doctorOptions()"
+            [label]="'process.filters.doctorName' | transloco"
+            [placeholder]="'process.filters.doctorNamePlaceholder' | transloco"
+            [size]="'sm'"
+            formControlName="doctor_name"
+          ></app-searchable-select>
+        </div>
+
+        <!-- Date Range Filter -->
+        <div class="form-control filter-input-wrapper lg:col-span-2">
+          <app-date-range-picker
+            [label]="'process.filters.startDate' | transloco"
+            [placeholder]="'process.filters.startDatePlaceholder' | transloco"
+            [size]="'sm'"
+            formControlName="date_range"
+          ></app-date-range-picker>
+        </div>
+
+        <!-- Status Filter -->
+        <div class="form-control filter-input-wrapper">
+          <app-searchable-select
+            [options]="statusOptions"
+            [label]="'process.filters.status' | transloco"
+            [placeholder]="'process.filters.statusPlaceholder' | transloco"
+            [size]="'sm'"
+            formControlName="status"
+          ></app-searchable-select>
+        </div>
+      </form>
+
+      <!-- Filter Actions -->
+      <div class="card-actions justify-end mt-4">
+        <button
+          type="button"
+          class="btn btn-ghost btn-sm"
+          (click)="onResetFilters()"
+        >
+          {{ 'process.filters.reset' | transloco }}
+        </button>
+        <button
+          type="button"
+          class="btn btn-accent btn-sm"
+          (click)="onSearch()"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-4 w-4"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+            />
+          </svg>
+          {{ 'process.filters.search' | transloco }}
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Data Table -->
+  <div class="card bg-base-100 shadow-sm">
+    <div class="card-body p-0">
+      <app-data-table
+        [columns]="columns"
+        [data]="processes()"
+        [pagination]="pagination()"
+        [loading]="loading()"
+        [emptyMessage]="'process.table.empty' | transloco"
+        (pageChange)="onPageChange($event)"
+        (rowClick)="onRowClick($event)"
+      ></app-data-table>
+    </div>
+  </div>
+</div>
+

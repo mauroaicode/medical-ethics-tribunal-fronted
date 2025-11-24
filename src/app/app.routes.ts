@@ -1,18 +1,13 @@
 import { Routes } from '@angular/router';
 import { authGuard } from './core/guards/auth.guard';
 import { guestGuard } from './core/guards/guest.guard';
-import { redirectGuard } from './core/guards/redirect.guard';
 
 export const routes: Routes = [
-  // Redirect empty path - will be handled by guards
   {
     path: '',
     pathMatch: 'full',
-    canActivate: [redirectGuard],
-    loadChildren: () => import('./modules/auth/sign-in/sign-in.routes'), // Dummy, never reached
+    redirectTo: '/sign-in',
   },
-
-  // Auth routes (only for guests - not authenticated users)
   {
     path: 'sign-in',
     canActivate: [guestGuard],
@@ -41,7 +36,5 @@ export const routes: Routes = [
       },
     ],
   },
-
-  // Catch all route - redirect to sign-in
   { path: '**', redirectTo: '/sign-in' },
 ];

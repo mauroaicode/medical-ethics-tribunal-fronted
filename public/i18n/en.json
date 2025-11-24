@@ -67,10 +67,6 @@
     "spanish": "Spanish",
     "english": "English"
   },
-  "navigation": {
-    "dashboard": "Dashboard",
-    "toggleSidebar": "Toggle sidebar"
-  },
   "header": {
     "searchPlaceholder": "Search...",
     "search": "Search",
@@ -83,6 +79,57 @@
   },
   "dashboard": {
     "title": "Dashboard"
+  },
+  "navigation": {
+    "dashboard": "Dashboard",
+    "processes": "Processes",
+    "toggleSidebar": "Toggle sidebar"
+  },
+  "process": {
+    "title": "Processes",
+    "description": "Management of Medical Ethics Tribunal processes",
+    "create": "Create Process",
+    "filters": {
+      "title": "Search Filters",
+      "processNumber": "Process Number",
+      "processNumberPlaceholder": "Ex: PRO-0001",
+      "complainantDocument": "Complainant ID",
+      "complainantDocumentPlaceholder": "Ex: 1234567890",
+      "doctorName": "Doctor Name",
+      "doctorNamePlaceholder": "Ex: John Doe",
+      "startDate": "Date Range",
+      "startDateFrom": "Date from",
+      "startDateTo": "Date to",
+      "startDatePlaceholder": "Select date",
+      "status": "Status",
+      "statusPlaceholder": "Select status",
+      "search": "Search",
+      "reset": "Clear"
+    },
+    "table": {
+      "number": "#",
+      "processNumber": "Number",
+      "name": "Name",
+      "status": "Status",
+      "complainant": "Complainant",
+      "complainantDocument": "Complainant ID",
+      "doctor": "Doctor",
+      "startDate": "Start Date",
+      "proceedings": "Proceedings",
+      "empty": "No processes found"
+    },
+    "status": {
+      "borrador": "Draft",
+      "in_progress": "In Progress",
+      "closed": "Closed"
+    }
+  },
+  "table": {
+    "showing": "Showing",
+    "to": "to",
+    "of": "of",
+    "results": "results",
+    "perPage": "per page"
   }
 }
 

@@ -9,9 +9,7 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router, RouterOutlet, ActivatedRoute, NavigationEnd } from '@angular/router';
-import { filter } from 'rxjs';
-import { TranslocoPipe } from '@jsverse/transloco';
+import { Router, RouterOutlet, ActivatedRoute } from '@angular/router';
 import { SidebarComponent } from '@app/layout/common/sidebar/sidebar.component';
 import { HeaderComponent } from '@app/layout/common/header/header.component';
 
@@ -37,17 +35,7 @@ export class AuthenticatedLayoutComponent {
   public sidebarOpen = signal<boolean>(true);
 
   constructor() {
-    // Update page title on route change
-    this._router.events
-      .pipe(filter((event) => event instanceof NavigationEnd))
-      .subscribe(() => {
-        this._updatePageTitle();
-      });
-
-    // Initial title update
-    effect(() => {
-      this._updatePageTitle();
-    });
+    this._updatePageTitle();
   }
 
   /**
@@ -64,22 +52,29 @@ export class AuthenticatedLayoutComponent {
    * Update page title from route data
    */
   private _updatePageTitle(): void {
-    let route = this._activatedRoute;
-    while (route.firstChild) {
-      route = route.firstChild;
+    try {
+      let route = this._activatedRoute;
+      while (route?.firstChild) {
+        route = route.firstChild;
+      }
+
+      const title = route?.snapshot?.data?.['title'];
+
+      if (title) {
+        this.pageTitle.set(title);
+        return;
+      }
+    } catch (error) {
+      console.error('Error updating page title:', error);
     }
 
-    const title = route.snapshot.data['title'];
-    if (title) {
-      this.pageTitle.set(title);
+    const path = this._router.url;
+    if (path.includes('/dashboard')) {
+      this.pageTitle.set('navigation.dashboard');
+    } else if (path.includes('/processes')) {
+      this.pageTitle.set('process.title');
     } else {
-      // Default title based on route
-      const path = this._router.url;
-      if (path.includes('/dashboard')) {
-        this.pageTitle.set('navigation.dashboard');
-      } else {
-        this.pageTitle.set('');
-      }
+      this.pageTitle.set('');
     }
   }
 }

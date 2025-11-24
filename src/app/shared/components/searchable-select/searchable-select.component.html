@@ -1,0 +1,107 @@
+<div class="form-control w-full">
+  @if (label()) {
+    <label class="label">
+      <span class="label-text">{{ label() }}</span>
+    </label>
+  }
+  
+  <div class="relative" #dropdownContainer>
+    <!-- Select Button -->
+    <button
+      type="button"
+      class="input input-bordered w-full text-left flex items-center justify-between"
+      [class.input-xs]="size() === 'xs'"
+      [class.input-sm]="size() === 'sm'"
+      [class.input-md]="size() === 'md'"
+      [class.input-lg]="size() === 'lg'"
+      [class.input-disabled]="disabled()"
+      [disabled]="disabled()"
+      (click)="toggleDropdown()"
+      (blur)="onBlur()"
+    >
+      <span [class.text-base-content/50]="!selectedLabel()">
+        {{ selectedLabel() || placeholder() }}
+      </span>
+      <div class="flex items-center gap-2">
+        @if (selectedValue() !== null) {
+          <button
+            type="button"
+            class="btn btn-ghost btn-xs btn-circle"
+            (click)="clearSelection($event)"
+            [attr.aria-label]="'Clear selection'"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-3 w-3"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </button>
+        }
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-4 w-4 transition-transform"
+          [class.rotate-180]="isOpen()"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M19 9l-7 7-7-7"
+          />
+        </svg>
+      </div>
+    </button>
+
+    <!-- Dropdown -->
+    @if (isOpen()) {
+      <div class="searchable-select-dropdown absolute z-50 w-full mt-1 bg-base-100 border border-base-300 rounded-lg shadow-lg max-h-60 overflow-hidden">
+        <!-- Search Input -->
+        <div class="p-2 border-b border-base-300">
+          <input
+            type="text"
+            class="input input-bordered input-sm w-full"
+            [placeholder]="'Buscar...'"
+            [value]="searchTerm()"
+            (input)="onSearchInput($event)"
+            (click)="$event.stopPropagation()"
+            autofocus
+          />
+        </div>
+
+        <!-- Options List -->
+        <div class="max-h-48 overflow-y-auto">
+          @if (filteredOptions().length === 0) {
+            <div class="p-4 text-center text-base-content/70 text-sm">
+              No se encontraron resultados
+            </div>
+          } @else {
+            @for (option of filteredOptions(); track option.id) {
+              <button
+                type="button"
+                class="w-full text-left px-4 py-2 hover:bg-base-200 transition-colors"
+                [class.bg-accent]="selectedValue() === option.value"
+                [class.text-accent-content]="selectedValue() === option.value"
+                (click)="selectOption(option)"
+              >
+                {{ option.label }}
+              </button>
+            }
+          }
+        </div>
+      </div>
+    }
+  </div>
+</div>
+

@@ -15,7 +15,7 @@ export const authGuard: CanActivateFn = async (route: ActivatedRouteSnapshot, st
   const user: User | null = authService.currentUser;
 
   if (!token || !user) {
-    await router.navigate(['/sign-in']);
+    await router.navigate(['/sign-in'], { replaceUrl: true });
     return false;
   }
 

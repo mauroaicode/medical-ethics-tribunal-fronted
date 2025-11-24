@@ -1,0 +1,42 @@
+// Processes list specific styles
+
+// Filter input hover effects
+.filter-input-wrapper {
+  .filter-input {
+    transition: all 0.2s ease-in-out;
+    
+    &:hover:not(:disabled):not(:focus) {
+      transform: translateY(-1px);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+    
+    &:focus {
+      transform: translateY(-1px);
+    }
+  }
+  
+  // Primary filter (Process Number)
+  .filter-input-primary:hover:not(:disabled):not(:focus) {
+    border-color: hsl(var(--p));
+    background-color: hsl(var(--p) / 0.05);
+  }
+  
+  // Secondary filter (Complainant Document)
+  .filter-input-secondary:hover:not(:disabled):not(:focus) {
+    border-color: hsl(var(--s));
+    background-color: hsl(var(--s) / 0.05);
+  }
+  
+  // Accent filter (Doctor Name)
+  .filter-input-accent:hover:not(:disabled):not(:focus) {
+    border-color: hsl(var(--a));
+    background-color: hsl(var(--a) / 0.05);
+  }
+  
+  // Info filter (Start Date)
+  .filter-input-info:hover:not(:disabled):not(:focus) {
+    border-color: hsl(var(--in));
+    background-color: hsl(var(--in) / 0.05);
+  }
+}
+

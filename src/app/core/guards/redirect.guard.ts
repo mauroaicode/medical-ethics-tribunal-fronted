@@ -12,31 +12,33 @@ export const redirectGuard: CanActivateFn = async (route, state) => {
   const authService = inject(AuthService);
   const router = inject(Router);
 
-  const token = authService.accessToken;
-  const user = authService.currentUser;
+  try {
+    const token = authService.accessToken;
+    const user = authService.currentUser;
 
-  // If user is authenticated, redirect to their dashboard
-  if (token && user) {
-    const userRoles = user?.roles ?? [];
+    if (token && user) {
+      const userRoles = user?.roles ?? [];
 
-    // Try to find a matching route for the user's roles
-    for (const role of userRoles) {
-      const roleName = role.value as RoleName;
-      const routePath = ROLE_ROUTE_MAP[roleName];
+      for (const role of userRoles) {
+        const roleName = role.value as RoleName;
+        const routePath = ROLE_ROUTE_MAP[roleName];
 
-      if (routePath) {
-        await router.navigate([routePath]);
-        return false;
+        if (routePath) {
+          await router.navigate([routePath], { replaceUrl: true });
+          return false;
+        }
       }
+
+      await router.navigate([ROUTES_ADMIN.DASHBOARD], { replaceUrl: true });
+      return false;
     }
 
-    // Default to dashboard if no role matches
-    await router.navigate([ROUTES_ADMIN.DASHBOARD]);
+    await router.navigate(['/sign-in'], { replaceUrl: true });
+    return false;
+  } catch (error) {
+    console.error('Error in redirectGuard:', error);
+    await router.navigate(['/sign-in'], { replaceUrl: true });
     return false;
   }
-
-  // User is not authenticated, redirect to sign-in
-  await router.navigate(['/sign-in']);
-  return false;
 };
 

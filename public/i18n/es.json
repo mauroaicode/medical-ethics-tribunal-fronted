@@ -66,10 +66,6 @@
       "login": "Inicio de sesión exitoso"
     }
   },
-  "navigation": {
-    "dashboard": "Dashboard",
-    "toggleSidebar": "Alternar menú lateral"
-  },
   "header": {
     "searchPlaceholder": "Buscar...",
     "search": "Buscar",
@@ -82,6 +78,57 @@
   },
   "dashboard": {
     "title": "Dashboard"
+  },
+  "navigation": {
+    "dashboard": "Dashboard",
+    "processes": "Procesos",
+    "toggleSidebar": "Alternar menú lateral"
+  },
+  "process": {
+    "title": "Procesos",
+    "description": "Gestión de procesos del Tribunal de Ética Médica",
+    "create": "Crear Proceso",
+    "filters": {
+      "title": "Filtros de Búsqueda",
+      "processNumber": "Número de Proceso",
+      "processNumberPlaceholder": "Ej: PRO-0001",
+      "complainantDocument": "Cédula del Quejoso",
+      "complainantDocumentPlaceholder": "Ej: 1234567890",
+      "doctorName": "Nombre del Médico",
+      "doctorNamePlaceholder": "Ej: Juan Pérez",
+      "startDate": "Rango de Fechas",
+      "startDateFrom": "Fecha desde",
+      "startDateTo": "Fecha hasta",
+      "startDatePlaceholder": "Seleccionar fecha",
+      "status": "Estado",
+      "statusPlaceholder": "Seleccionar estado",
+      "search": "Buscar",
+      "reset": "Limpiar"
+    },
+    "table": {
+      "number": "#",
+      "processNumber": "Número",
+      "name": "Nombre",
+      "status": "Estado",
+      "complainant": "Quejoso",
+      "complainantDocument": "Cédula Quejoso",
+      "doctor": "Médico",
+      "startDate": "Fecha Inicio",
+      "proceedings": "Actuaciones",
+      "empty": "No se encontraron procesos"
+    },
+    "status": {
+      "borrador": "Borrador",
+      "in_progress": "En Proceso",
+      "closed": "Cerrado"
+    }
+  },
+  "table": {
+    "showing": "Mostrando",
+    "to": "a",
+    "of": "de",
+    "results": "resultados",
+    "perPage": "por página"
   }
 }
 

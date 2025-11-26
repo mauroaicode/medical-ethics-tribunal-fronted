@@ -1,0 +1,56 @@
+<div class="card bg-base-100 shadow-sm">
+  <div class="card-body">
+    <h2 class="card-title text-lg mb-4">{{ 'templates.search.title' | transloco }}</h2>
+    <form
+      [formGroup]="searchForm"
+      class="flex flex-col  sm:flex-row justify-between items-end gap-4"
+    >
+      <!-- Input -->
+      <div class="form-control">
+        <label class="label">
+          <span class="label-text">{{ 'templates.search.name' | transloco }}</span>
+        </label>
+        <input
+          type="text"
+          formControlName="name"
+          class="input input-bordered input-sm w-full"
+          [placeholder]="'templates.search.namePlaceholder' | transloco"
+          (keyup.enter)="onSearchClick()"
+        />
+      </div>
+      <!-- Botones -->
+      <div class="flex gap-2">
+        <button
+          type="button"
+          class="btn btn-ghost btn-sm"
+          (click)="onResetClick()"
+        >
+          {{ 'templates.search.reset' | transloco }}
+        </button>
+
+        <button
+          type="button"
+          class="btn btn-neutral btn-sm"
+          (click)="onSearchClick()"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-4 w-4"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+            />
+          </svg>
+          {{ 'templates.search.search' | transloco }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+

@@ -25,7 +25,7 @@
     <table class="table table-zebra" style="min-width: 1000px; border-collapse: separate !important; border-spacing: 0 !important; position: relative;">
       <!-- Table Header -->
       <thead [attr.style]="'background-color: #161326 !important; color: #ffffff !important;'">
-        <tr [attr.style]="'background-color: #161326 !important;'">
+        <tr>
           @for (column of columns(); track column.key) {
             <th
               [class.text-left]="!column.align || column.align === 'left'"

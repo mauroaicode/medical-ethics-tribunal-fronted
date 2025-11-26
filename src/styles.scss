@@ -47,10 +47,6 @@ app-data-table .table tbody tr:nth-child(odd) {
   background-color: #ffffff !important;
 }
 
-app-data-table .table tbody tr:nth-child(odd) td {
-  background-color: #ffffff !important;
-}
-
 app-data-table .table tbody tr:hover {
   background-color: rgba(0, 211, 187, 0.2) !important;
   cursor: pointer;
@@ -60,13 +56,6 @@ app-data-table .table tbody tr:hover td {
   background-color: rgba(0, 211, 187, 0.2) !important;
 }
 
-app-data-table .table tbody tr:nth-child(even) td.sticky-cell {
-  background-color: #e8e8e8 !important;
-}
-
-app-data-table .table tbody tr:nth-child(odd) td.sticky-cell {
-  background-color: #ffffff !important;
-}
 
 app-data-table .table tbody tr:hover td.sticky-cell {
   background-color: rgba(0, 211, 187, 0.2) !important;

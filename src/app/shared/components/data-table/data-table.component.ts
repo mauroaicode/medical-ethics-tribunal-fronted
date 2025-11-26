@@ -177,14 +177,14 @@ export class DataTableComponent {
    */
   getHeaderCellStyle(): string {
     // Using direct color values - using project's black color
-    return 'background-color: #161326 !important; background: #161326 !important; color: #ffffff !important;';
+    return '';
   }
 
   /**
    * Get sticky cell style
    */
   getStickyCellStyle(): string {
-    return 'position: -webkit-sticky !important; position: sticky !important; left: 0 !important; z-index: 500 !important; background-color: hsl(var(--b1)) !important; background: hsl(var(--b1)) !important; min-width: 150px !important; max-width: 150px !important; width: 150px !important; box-shadow: 2px 0 4px rgba(0, 0, 0, 0.1) !important; white-space: nowrap !important; overflow: visible !important; will-change: transform !important;';
+    return 'position: -webkit-sticky !important; position: sticky !important; left: 0 !important; z-index: 500 !important; background-color: hsl(var(--b1)) !important; min-width: 150px !important; max-width: 150px !important; width: 150px !important; box-shadow: 2px 0 4px rgba(0, 0, 0, 0.1) !important; white-space: nowrap !important; overflow: visible !important; will-change: transform !important;';
   }
 }
 

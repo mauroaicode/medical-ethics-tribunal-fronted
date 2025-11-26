@@ -65,7 +65,8 @@
     "confirm": "Confirm",
     "cancel": "Cancel",
     "spanish": "Spanish",
-    "english": "English"
+    "english": "English",
+    "close": "Close"
   },
   "header": {
     "searchPlaceholder": "Search...",
@@ -88,7 +89,6 @@
   "process": {
     "title": "Processes",
     "description": "Management of Medical Ethics Tribunal processes",
-    "create": "Create Process",
     "filters": {
       "title": "Search Filters",
       "processNumber": "Process Number",
@@ -122,6 +122,46 @@
       "borrador": "Draft",
       "in_progress": "In Progress",
       "closed": "Closed"
+    },
+    "create": {
+      "title": "Create Process",
+      "info": "Complete all required fields to create a new medical ethics process. All entered data is confidential and protected by the system's security policies.",
+      "complainant": "Complainant",
+      "complainantPlaceholder": "Select complainant",
+      "doctor": "Doctor",
+      "doctorPlaceholder": "Select doctor",
+      "magistrateInstructor": "Instructor Magistrate",
+      "magistrateInstructorPlaceholder": "Select instructor magistrate",
+      "magistratePonente": "Ponente Magistrate",
+      "magistratePonentePlaceholder": "Select ponente magistrate",
+      "name": "Process Name",
+      "namePlaceholder": "Ex: Medical Ethics Process",
+      "startDate": "Start Date",
+      "startDatePlaceholder": "Select date",
+      "description": "Description",
+      "descriptionPlaceholder": "Detailed description of the medical ethics process",
+      "submit": "Create Process",
+      "unsavedChangesWarning": "You have unsaved changes. Are you sure you want to leave?",
+      "confirmation": {
+        "title": "Confirm Creation",
+        "message": "Are you sure you want to create this process?",
+        "confirm": "Create",
+        "cancel": "Cancel"
+      },
+      "cancelConfirmation": {
+        "title": "Confirm Exit",
+        "message": "You have unsaved changes. Are you sure you want to leave? All entered data will be lost.",
+        "confirm": "Yes, exit",
+        "cancel": "Cancel"
+      },
+      "errors": {
+        "fieldRequired": "This field is required",
+        "minLength": "This field must have at least {{length}} characters",
+        "loadComplainants": "Error loading complainants",
+        "loadDoctors": "Error loading doctors",
+        "loadMagistrates": "Error loading magistrates",
+        "createFailed": "Error creating process. Please try again."
+      }
     }
   },
   "table": {

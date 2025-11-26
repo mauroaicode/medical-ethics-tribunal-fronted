@@ -95,3 +95,16 @@ export interface ProcessResponseMeta {
   to: number;
 }
 
+/**
+ * Create Process Request
+ */
+export interface CreateProcessRequest {
+  complainant_id: number;
+  doctor_id: number;
+  magistrate_instructor_id: number;
+  magistrate_ponente_id: number;
+  name: string;
+  start_date: string;
+  description: string;
+}
+

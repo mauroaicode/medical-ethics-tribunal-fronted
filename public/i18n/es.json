@@ -5,7 +5,8 @@
     "email": "Correo electrónico",
     "password": "Contraseña",
     "confirm": "Confirmar",
-    "cancel": "Cancelar"
+    "cancel": "Cancelar",
+    "close": "Cerrar"
   },
   "auth": {
     "signIn": {
@@ -87,7 +88,6 @@
   "process": {
     "title": "Procesos",
     "description": "Gestión de procesos del Tribunal de Ética Médica",
-    "create": "Crear Proceso",
     "filters": {
       "title": "Filtros de Búsqueda",
       "processNumber": "Número de Proceso",
@@ -121,6 +121,46 @@
       "borrador": "Borrador",
       "in_progress": "En Proceso",
       "closed": "Cerrado"
+    },
+    "create": {
+      "title": "Crear Proceso",
+      "info": "Complete todos los campos requeridos para crear un nuevo proceso de ética médica. Todos los datos ingresados son confidenciales y están protegidos por las políticas de seguridad del sistema.",
+      "complainant": "Quejoso",
+      "complainantPlaceholder": "Seleccionar quejoso",
+      "doctor": "Médico",
+      "doctorPlaceholder": "Seleccionar médico",
+      "magistrateInstructor": "Magistrado Instructor",
+      "magistrateInstructorPlaceholder": "Seleccionar magistrado instructor",
+      "magistratePonente": "Magistrado Ponente",
+      "magistratePonentePlaceholder": "Seleccionar magistrado ponente",
+      "name": "Nombre del Proceso",
+      "namePlaceholder": "Ej: Proceso de Ética Médica",
+      "startDate": "Fecha de Inicio",
+      "startDatePlaceholder": "Seleccionar fecha",
+      "description": "Descripción",
+      "descriptionPlaceholder": "Descripción detallada del proceso de ética médica",
+      "submit": "Crear Proceso",
+      "unsavedChangesWarning": "Tienes cambios sin guardar. ¿Estás seguro de que deseas salir?",
+      "confirmation": {
+        "title": "Confirmar Creación",
+        "message": "¿Está seguro de que desea crear este proceso?",
+        "confirm": "Crear",
+        "cancel": "Cancelar"
+      },
+      "cancelConfirmation": {
+        "title": "Confirmar Salida",
+        "message": "Tienes cambios sin guardar. ¿Estás seguro de que deseas salir? Se perderán todos los datos ingresados.",
+        "confirm": "Sí, salir",
+        "cancel": "Cancelar"
+      },
+      "errors": {
+        "fieldRequired": "Este campo es requerido",
+        "minLength": "Este campo debe tener al menos {{length}} caracteres",
+        "loadComplainants": "Error al cargar los quejosos",
+        "loadDoctors": "Error al cargar los médicos",
+        "loadMagistrates": "Error al cargar los magistrados",
+        "createFailed": "Error al crear el proceso. Por favor, intente nuevamente."
+      }
     }
   },
   "table": {

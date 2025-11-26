@@ -1,0 +1,46 @@
+<dialog class="modal" [class.modal-open]="isOpen()">
+  <div class="modal-box">
+    <h3 class="font-bold text-lg text-base-content">
+      {{ title() }}
+    </h3>
+    
+    @if (message()) {
+      <p class="py-4 text-base-content/70">
+        {{ message() }}
+      </p>
+    }
+    
+    <div class="modal-action">
+      <form method="dialog">
+          <button
+            type="button"
+            class="btn"
+            [ngClass]="cancelButtonClass()"
+            (click)="onCancel()"
+          >
+            @if (cancelLabel().includes('.')) {
+              {{ cancelLabel() | transloco }}
+            } @else {
+              {{ cancelLabel() }}
+            }
+          </button>
+      </form>
+        <button
+          type="button"
+          class="btn"
+          [ngClass]="confirmButtonClass()"
+          (click)="onConfirm()"
+        >
+          @if (confirmLabel().includes('.')) {
+            {{ confirmLabel() | transloco }}
+          } @else {
+            {{ confirmLabel() }}
+          }
+        </button>
+    </div>
+  </div>
+  <form method="dialog" class="modal-backdrop" (click)="onClose()">
+    <button type="button">{{ 'common.close' | transloco }}</button>
+  </form>
+</dialog>
+

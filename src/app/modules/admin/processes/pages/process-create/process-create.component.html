@@ -1,0 +1,249 @@
+<div class="w-full space-y-6">
+  <!-- Page Header -->
+  <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+    <div>
+      <h1 class="text-2xl font-bold text-base-content md:text-3xl">
+        {{ 'process.create.title' | transloco }}
+      </h1>
+      <p class="mt-1 text-sm text-base-content/70">
+        {{ 'process.create.info' | transloco }}
+      </p>
+    </div>
+    <button
+      type="button"
+      class="btn btn-ghost btn-sm sm:btn-md"
+      (click)="onCancel()"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="h-5 w-5"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M6 18L18 6M6 6l12 12"
+        />
+      </svg>
+      {{ 'generics.cancel' | transloco }}
+    </button>
+  </div>
+
+  <!-- Error Alert -->
+  @if (error()) {
+    <div class="alert alert-error">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="stroke-current shrink-0 h-6 w-6"
+        fill="none"
+        viewBox="0 0 24 24"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M10 14l-2-2m0 0l-2-2m2 2l2-2m-2 2l-2 2m6-8a9 9 0 11-18 0 9 9 0 0118 0z"
+        />
+      </svg>
+      <span>{{ error() }}</span>
+    </div>
+  }
+
+  <!-- Form Card -->
+  <div class="card bg-base-100 shadow-sm">
+    <div class="card-body">
+      <form [formGroup]="processForm" (ngSubmit)="onSubmit()">
+        <div class="grid grid-cols-1 gap-6 lg:grid-cols-4">
+
+          <div class="form-control">
+            <label class="label">
+              <span class="label-text">
+                {{ 'process.create.name' | transloco }}
+              </span>
+            </label>
+            <input
+              type="text"
+              formControlName="name"
+              class="input input-bordered input-md w-full"
+              [class.input-error]="hasError('name')"
+              [placeholder]="'process.create.namePlaceholder' | transloco"
+            />
+            @if (hasError('name')) {
+              <label class="label">
+                <span class="label-text-alt text-error">
+                  {{ getErrorMessage('name') }}
+                </span>
+              </label>
+            }
+          </div>
+
+        <!-- Complainant -->
+        <div class="form-control">
+          <app-searchable-select
+            [options]="complainantOptions()"
+            [label]="'process.create.complainant' | transloco"
+            [placeholder]="'process.create.complainantPlaceholder' | transloco"
+            [size]="'md'"
+            formControlName="complainant_id"
+          ></app-searchable-select>
+          @if (hasError('complainant_id')) {
+            <label class="label">
+              <span class="label-text-alt text-error">
+                {{ getErrorMessage('complainant_id') }}
+              </span>
+            </label>
+          }
+        </div>
+
+        <!-- Doctor -->
+        <div class="form-control">
+          <app-searchable-select
+            [options]="doctorOptions()"
+            [label]="'process.create.doctor' | transloco"
+            [placeholder]="'process.create.doctorPlaceholder' | transloco"
+            [size]="'md'"
+            formControlName="doctor_id"
+          ></app-searchable-select>
+          @if (hasError('doctor_id')) {
+            <label class="label">
+              <span class="label-text-alt text-error">
+                {{ getErrorMessage('doctor_id') }}
+              </span>
+            </label>
+          }
+        </div>
+
+        <!-- Magistrate Instructor -->
+        <div class="form-control">
+          <app-searchable-select
+            [options]="magistrateInstructorOptions()"
+            [label]="'process.create.magistrateInstructor' | transloco"
+            [placeholder]="'process.create.magistrateInstructorPlaceholder' | transloco"
+            [size]="'md'"
+            formControlName="magistrate_instructor_id"
+          ></app-searchable-select>
+          @if (hasError('magistrate_instructor_id')) {
+            <label class="label">
+              <span class="label-text-alt text-error">
+                {{ getErrorMessage('magistrate_instructor_id') }}
+              </span>
+            </label>
+          }
+        </div>
+
+        <!-- Magistrate Ponente -->
+        <div class="form-control">
+          <app-searchable-select
+            [options]="magistratePonenteOptions()"
+            [label]="'process.create.magistratePonente' | transloco"
+            [placeholder]="'process.create.magistratePonentePlaceholder' | transloco"
+            [size]="'md'"
+            formControlName="magistrate_ponente_id"
+          ></app-searchable-select>
+          @if (hasError('magistrate_ponente_id')) {
+            <label class="label">
+              <span class="label-text-alt text-error">
+                {{ getErrorMessage('magistrate_ponente_id') }}
+              </span>
+            </label>
+          }
+        </div>
+
+          <!-- Start Date - Full width on mobile, 4 columns on large screens -->
+          <div class="form-control ">
+            <app-date-picker
+              [label]="'process.create.startDate' | transloco"
+              [placeholder]="'process.create.startDatePlaceholder' | transloco"
+              [size]="'md'"
+              formControlName="start_date"
+            ></app-date-picker>
+            @if (hasError('start_date')) {
+              <label class="label">
+                <span class="label-text-alt text-error">
+                  {{ getErrorMessage('start_date') }}
+                </span>
+              </label>
+            }
+          </div>
+
+          <!-- Description - Full width, last field -->
+          <div class="form-control lg:col-span-4">
+            <label class="label">
+              <span class="label-text">
+                {{ 'process.create.description' | transloco }}
+              </span>
+            </label>
+            <textarea
+              formControlName="description"
+              class="textarea textarea-bordered textarea-md min-h-40 resize-y w-full"
+              [class.textarea-error]="hasError('description')"
+              [placeholder]="'process.create.descriptionPlaceholder' | transloco"
+              rows="6"
+            ></textarea>
+            @if (hasError('description')) {
+              <label class="label">
+                <span class="label-text-alt text-error">
+                  {{ getErrorMessage('description') }}
+                </span>
+              </label>
+            }
+          </div>
+        </div>
+
+        <!-- Form Actions -->
+        <div class="flex justify-end gap-3 mt-6">
+          <button
+            type="button"
+            class="btn btn-ghost"
+            (click)="onCancel()"
+            [disabled]="loading()"
+          >
+            {{ 'generics.cancel' | transloco }}
+          </button>
+          <button
+            type="submit"
+            class="btn btn-primary"
+            [disabled]="loading() || processForm.invalid"
+          >
+            @if (loading()) {
+              <span class="loading loading-spinner loading-sm"></span>
+            }
+            {{ 'process.create.submit' | transloco }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Confirmation Dialog for Create -->
+  <app-confirmation-dialog
+    [isOpen]="showConfirmation()"
+    [title]="'process.create.confirmation.title' | transloco"
+    [message]="'process.create.confirmation.message' | transloco"
+    [confirmLabel]="'process.create.confirmation.confirm' | transloco"
+    [cancelLabel]="'process.create.confirmation.cancel' | transloco"
+    [confirmButtonClass]="'btn-primary'"
+    [cancelButtonClass]="'btn-ghost'"
+    (confirm)="onConfirm()"
+    (cancel)="onCancelConfirmation()"
+    (close)="onCloseConfirmation()"
+  ></app-confirmation-dialog>
+
+  <!-- Confirmation Dialog for Cancel -->
+  <app-confirmation-dialog
+    [isOpen]="showCancelConfirmation()"
+    [title]="'process.create.cancelConfirmation.title' | transloco"
+    [message]="'process.create.cancelConfirmation.message' | transloco"
+    [confirmLabel]="'process.create.cancelConfirmation.confirm' | transloco"
+    [cancelLabel]="'process.create.cancelConfirmation.cancel' | transloco"
+    [confirmButtonClass]="'btn-error'"
+    [cancelButtonClass]="'btn-ghost'"
+    (confirm)="onConfirmCancel()"
+    (cancel)="onCancelCancelConfirmation()"
+    (close)="onCloseCancelConfirmation()"
+  ></app-confirmation-dialog>
+</div>
+

@@ -3,7 +3,7 @@ import {HttpClient, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {environment} from '@app/core/config/environment.config';
-import {ProcessFilter, ProcessResponse} from '@app/core/models/process/process.model';
+import {ProcessFilter, ProcessResponse, CreateProcessRequest, Process} from '@app/core/models/process/process.model';
 
 @Injectable({
   providedIn: 'root',
@@ -69,6 +69,17 @@ export class ProcessService {
         };
       })
     );
+  }
+
+  /**
+   * Create a new process
+   *
+   * @param processData - Process data to create
+   * @returns Observable with created process
+   */
+  createProcess(processData: CreateProcessRequest): Observable<Process> {
+    const url = `${environment.apiBaseUrl}/processes`;
+    return this._http.post<Process>(url, processData);
   }
 }
 

@@ -83,6 +83,7 @@
   "navigation": {
     "dashboard": "Dashboard",
     "processes": "Procesos",
+    "templates": "Plantillas",
     "toggleSidebar": "Alternar menú lateral"
   },
   "process": {
@@ -169,6 +170,26 @@
     "of": "de",
     "results": "resultados",
     "perPage": "por página"
+  },
+  "templates": {
+    "title": "Plantillas",
+    "description": "Gestión de plantillas de documentos del Tribunal de Ética Médica",
+    "search": {
+      "title": "Búsqueda de Plantillas",
+      "name": "Nombre de la plantilla",
+      "namePlaceholder": "Ej: queja",
+      "search": "Buscar",
+      "reset": "Limpiar"
+    },
+    "sync": {
+      "button": "Sincronizar Plantillas",
+      "success": "Se sincronizaron {{count}} plantillas exitosamente."
+    },
+    "card": {
+      "createdAt": "Creado",
+      "viewInDocs": "Ver plantilla en Docs"
+    },
+    "empty": "No se encontraron plantillas"
   }
 }
 

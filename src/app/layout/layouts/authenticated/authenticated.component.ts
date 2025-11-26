@@ -4,12 +4,14 @@ import {
   computed,
   effect,
   inject,
+  OnDestroy,
   signal,
   ViewChild,
   ViewEncapsulation,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router, RouterOutlet, ActivatedRoute } from '@angular/router';
+import { Router, RouterOutlet, ActivatedRoute, NavigationEnd } from '@angular/router';
+import { filter, Subscription } from 'rxjs';
 import { SidebarComponent } from '@app/layout/common/sidebar/sidebar.component';
 import { HeaderComponent } from '@app/layout/common/header/header.component';
 
@@ -22,7 +24,7 @@ import { HeaderComponent } from '@app/layout/common/header/header.component';
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AuthenticatedLayoutComponent {
+export class AuthenticatedLayoutComponent implements OnDestroy {
   private _router = inject(Router);
   private _activatedRoute = inject(ActivatedRoute);
 
@@ -34,8 +36,24 @@ export class AuthenticatedLayoutComponent {
   // Sidebar state
   public sidebarOpen = signal<boolean>(true);
 
+  // Subscription for route changes
+  private _routeSubscription?: Subscription;
+
   constructor() {
     this._updatePageTitle();
+    
+    // Update title when route changes
+    this._routeSubscription = this._router.events
+      .pipe(filter(event => event instanceof NavigationEnd))
+      .subscribe(() => {
+        this._updatePageTitle();
+      });
+  }
+
+  ngOnDestroy(): void {
+    if (this._routeSubscription) {
+      this._routeSubscription.unsubscribe();
+    }
   }
 
   /**
@@ -73,6 +91,8 @@ export class AuthenticatedLayoutComponent {
       this.pageTitle.set('navigation.dashboard');
     } else if (path.includes('/processes')) {
       this.pageTitle.set('process.title');
+    } else if (path.includes('/templates')) {
+      this.pageTitle.set('templates.title');
     } else {
       this.pageTitle.set('');
     }

@@ -84,6 +84,7 @@
   "navigation": {
     "dashboard": "Dashboard",
     "processes": "Processes",
+    "templates": "Templates",
     "toggleSidebar": "Toggle sidebar"
   },
   "process": {
@@ -170,6 +171,26 @@
     "of": "of",
     "results": "results",
     "perPage": "per page"
+  },
+  "templates": {
+    "title": "Templates",
+    "description": "Management of document templates for the Medical Ethics Tribunal",
+    "search": {
+      "title": "Template Search",
+      "name": "Template name",
+      "namePlaceholder": "Ex: Template_1_Acta_Radicacion.docx",
+      "search": "Search",
+      "reset": "Clear"
+    },
+    "sync": {
+      "button": "Sync Templates",
+      "success": "{{count}} templates synced successfully."
+    },
+    "card": {
+      "createdAt": "Created",
+      "viewInDocs": "View template in Docs"
+    },
+    "empty": "No templates found"
   }
 }
 

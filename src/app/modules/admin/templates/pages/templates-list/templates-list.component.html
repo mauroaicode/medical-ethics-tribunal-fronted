@@ -1,0 +1,51 @@
+<div class="w-full space-y-6">
+  <!-- Page Header -->
+  <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+    <div>
+      <h1 class="text-2xl font-bold text-base-content md:text-3xl">
+        {{ 'templates.title' | transloco }}
+      </h1>
+      <p class="mt-1 text-sm text-base-content/70">
+        {{ 'templates.description' | transloco }}
+      </p>
+    </div>
+    <button
+      type="button"
+      class="btn btn-neutral btn-sm sm:btn-md"
+      (click)="syncTemplates()"
+      [disabled]="syncing()"
+    >
+      @if (syncing()) {
+        <span class="loading loading-spinner loading-sm"></span>
+      }
+      @if (!syncing()) {
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-5 w-5"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+          />
+        </svg>
+      }
+      {{ 'templates.sync.button' | transloco }}
+    </button>
+  </div>
+
+  <!-- Template List Component -->
+  <app-template-list
+    [templates]="templates()"
+    [loading]="loading()"
+    [searchValue]="searchValue()"
+    (onSearch)="onSearch($event)"
+    (onResetSearch)="onResetSearch()"
+    (onViewInDocs)="openTemplateInDocs($event)"
+  ></app-template-list>
+</div>
+

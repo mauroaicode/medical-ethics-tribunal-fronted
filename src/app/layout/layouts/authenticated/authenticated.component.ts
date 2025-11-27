@@ -41,7 +41,7 @@ export class AuthenticatedLayoutComponent implements OnDestroy {
 
   constructor() {
     this._updatePageTitle();
-    
+
     // Update title when route changes
     this._routeSubscription = this._router.events
       .pipe(filter(event => event instanceof NavigationEnd))
@@ -89,7 +89,7 @@ export class AuthenticatedLayoutComponent implements OnDestroy {
     const path = this._router.url;
     if (path.includes('/dashboard')) {
       this.pageTitle.set('navigation.dashboard');
-    } else if (path.includes('/processes')) {
+    } else if (path.includes('/processes') && !path.match(/\/processes\/[^/]+$/)) {
       this.pageTitle.set('process.title');
     } else if (path.includes('/templates')) {
       this.pageTitle.set('templates.title');

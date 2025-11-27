@@ -1,4 +1,12 @@
-<div class="card bg-base-100 shadow-md hover:shadow-lg transition-shadow">
+<div
+  class="card bg-base-100 shadow-md transition-shadow"
+  [class.hover:shadow-lg]="!selectable()"
+  [class.cursor-pointer]="selectable()"
+  [class.border-2]="selectable() && selected()"
+  [class.border-accent]="selectable() && selected()"
+  [class.border-base-300]="selectable() && !selected()"
+  (click)="handleSelect()"
+>
   <div class="card-body">
     <!-- Template Icon and Name -->
     <div class="flex items-start gap-3 mb-3">
@@ -23,6 +31,24 @@
           {{ template().name }}
         </h3>
       </div>
+      @if (selectable() && selected()) {
+        <div class="flex-shrink-0">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6 w-6 text-accent"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+            />
+          </svg>
+        </div>
+      }
     </div>
 
     <!-- Description -->

@@ -20,7 +20,10 @@ import { Template } from '@app/core/models/template/template.model';
 })
 export class TemplateCardComponent {
   template = input.required<Template>();
+  selected = input<boolean>(false);
+  selectable = input<boolean>(false);
   onViewInDocs = output<string>();
+  onSelect = output<Template>();
 
   /**
    * Open template in Google Docs (new tab)
@@ -28,6 +31,15 @@ export class TemplateCardComponent {
   openTemplateInDocs(webViewLink: string | null): void {
     if (webViewLink) {
       this.onViewInDocs.emit(webViewLink);
+    }
+  }
+
+  /**
+   * Handle template selection
+   */
+  handleSelect(): void {
+    if (this.selectable()) {
+      this.onSelect.emit(this.template());
     }
   }
 }

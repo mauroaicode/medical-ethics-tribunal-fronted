@@ -1,3 +1,7 @@
+import { ComplainantDetail } from '../complainant/complainant.model';
+import { DoctorDetail } from '../doctor/doctor.model';
+import { MagistrateDetail } from '../magistrate/magistrate.model';
+
 /**
  * Process Status Types (keys used for filtering)
  */
@@ -28,6 +32,7 @@ export interface Process {
   id: number;
   name: string;
   process_number: string;
+  slug: string;
   status: string;
   start_date?: string;
   proceedings_count?: number;
@@ -106,5 +111,26 @@ export interface CreateProcessRequest {
   name: string;
   start_date: string;
   description: string;
+}
+
+/**
+ * Process Detail Model (complete process with all relations)
+ */
+export interface ProcessDetail {
+  id: number;
+  complainant_id: number;
+  doctor_id: number;
+  magistrate_instructor_id: number;
+  magistrate_ponente_id: number;
+  name: string;
+  slug: string;
+  process_number: string;
+  start_date: string;
+  status: string;
+  description: string;
+  complainant: ComplainantDetail;
+  doctor: DoctorDetail;
+  magistrate_instructor: MagistrateDetail;
+  magistrate_ponente: MagistrateDetail;
 }
 

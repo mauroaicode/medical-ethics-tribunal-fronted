@@ -24,10 +24,13 @@ export class TemplateListComponent {
   templates = input.required<Template[]>();
   loading = input<boolean>(false);
   searchValue = input<string>('');
+  selectable = input<boolean>(false);
+  selectedTemplateId = input<number | null>(null);
 
   onSearch = output<string>();
   onResetSearch = output<void>();
   onViewInDocs = output<string>();
+  onSelect = output<Template>();
 
   /**
    * Handle search
@@ -48,6 +51,15 @@ export class TemplateListComponent {
    */
   handleViewInDocs(webViewLink: string): void {
     this.onViewInDocs.emit(webViewLink);
+  }
+
+  /**
+   * Handle template selection
+   */
+  handleSelect(template: Template): void {
+    if (this.selectable()) {
+      this.onSelect.emit(template);
+    }
   }
 }
 

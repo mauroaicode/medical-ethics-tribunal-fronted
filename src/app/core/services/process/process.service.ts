@@ -3,7 +3,7 @@ import {HttpClient, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {environment} from '@app/core/config/environment.config';
-import {ProcessFilter, ProcessResponse, CreateProcessRequest, Process} from '@app/core/models/process/process.model';
+import {ProcessFilter, ProcessResponse, CreateProcessRequest, Process, ProcessDetail} from '@app/core/models/process/process.model';
 
 @Injectable({
   providedIn: 'root',
@@ -57,10 +57,15 @@ export class ProcessService {
         const baseNumber = response.from ?? (response.current_page - 1) * response.per_page + 1;
         const mappedProcesses = response.data.map((process, index) => {
           const displayNumber = baseNumber + index;
-          return {
+          const mappedProcess = {
             ...process,
             display_number: displayNumber,
           };
+          // Log if slug is missing
+          if (!mappedProcess.slug) {
+            console.warn('Process missing slug:', mappedProcess);
+          }
+          return mappedProcess;
         });
 
         return {
@@ -80,6 +85,17 @@ export class ProcessService {
   createProcess(processData: CreateProcessRequest): Observable<Process> {
     const url = `${environment.apiBaseUrl}/processes`;
     return this._http.post<Process>(url, processData);
+  }
+
+  /**
+   * Get process detail by slug
+   *
+   * @param slug - Process slug
+   * @returns Observable with process detail
+   */
+  getProcessBySlug(slug: string): Observable<ProcessDetail> {
+    const url = `${environment.apiBaseUrl}/processes/${slug}`;
+    return this._http.get<ProcessDetail>(url);
   }
 }
 

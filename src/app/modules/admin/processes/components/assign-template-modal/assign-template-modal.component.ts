@@ -139,9 +139,28 @@ export class AssignTemplateModalComponent {
         error: (error) => {
           console.error('Error assigning template:', error);
           this.assigning.set(false);
-          this.error.set(
-            error?.error?.message || 'process.detail.assignError'
-          );
+          
+          // Extract error message from backend response
+          let errorMessage = 'process.detail.assignError';
+          
+          if (error?.error) {
+            // Check if error has messages array (Laravel format)
+            if (error.error.messages && Array.isArray(error.error.messages) && error.error.messages.length > 0) {
+              errorMessage = error.error.messages[0];
+            } 
+            // Check if error has a single message string
+            else if (error.error.message) {
+              errorMessage = error.error.message;
+            }
+            // Check if error is a string
+            else if (typeof error.error === 'string') {
+              errorMessage = error.error;
+            }
+          } else if (error?.message) {
+            errorMessage = error.message;
+          }
+          
+          this.error.set(errorMessage);
         },
       });
   }

@@ -1,0 +1,92 @@
+<dialog class="modal" [class.modal-open]="isOpen()">
+  <div class="modal-box assign-template">
+    <h3 class="font-bold text-xl text-base-content mb-4">
+      {{ 'process.detail.assignTemplate' | transloco }}
+    </h3>
+
+    <!-- Assigning Loading State -->
+    @if (assigning()) {
+      <div class="flex flex-col items-center justify-center py-12">
+        <span class="loading loading-spinner loading-lg text-neutral mb-4"></span>
+        <p class="text-base-content/70 text-lg">
+          {{ 'process.detail.creatingDocument' | transloco }}
+        </p>
+      </div>
+    }
+
+    <!-- Error State -->
+    @if (error() && !assigning()) {
+      <div class="alert alert-error mb-4 flex items-center justify-between">
+        <span class="flex-1 break-words pr-4">
+          @if (error()!.includes('.')) {
+            {{ error() | transloco }}
+          } @else {
+            {{ error() }}
+          }
+        </span>
+        <button
+          type="button"
+          class="btn btn-sm btn-ghost flex-shrink-0 ml-auto"
+          (click)="resetError()"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-4 w-4"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M6 18L18 6M6 6l12 12"
+            />
+          </svg>
+        </button>
+      </div>
+    }
+
+    <!-- Template List (hidden when assigning) -->
+    @if (!assigning()) {
+      <app-template-list
+        [templates]="templates()"
+        [loading]="loading()"
+        [searchValue]="searchValue()"
+        [selectable]="true"
+        [selectedTemplateId]="selectedTemplate()?.id ?? null"
+        (onSearch)="handleSearch($event)"
+        (onResetSearch)="handleResetSearch()"
+        (onSelect)="handleSelect($event)"
+      ></app-template-list>
+    }
+
+    <!-- Modal Actions -->
+    <div class="modal-action mt-6">
+      <form method="dialog">
+        <button
+          type="button"
+          class="btn btn-ghost"
+          [disabled]="assigning()"
+          (click)="handleCancel()"
+        >
+          {{ 'generics.cancel' | transloco }}
+        </button>
+      </form>
+      @if (!assigning()) {
+        <button
+          type="button"
+          class="btn btn-neutral"
+          [disabled]="!selectedTemplate()"
+          (click)="handleAssign()"
+        >
+          {{ 'process.detail.assign' | transloco }}
+        </button>
+      }
+    </div>
+  </div>
+  <form method="dialog" class="modal-backdrop" (click)="handleClose()">
+    <button type="button">{{ 'common.close' | transloco }}</button>
+  </form>
+</dialog>
+

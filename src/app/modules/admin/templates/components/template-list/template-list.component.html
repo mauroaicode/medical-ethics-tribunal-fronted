@@ -43,7 +43,10 @@
         @for (template of templates(); track template.id) {
           <app-template-card
             [template]="template"
+            [selectable]="selectable()"
+            [selected]="selectedTemplateId() === template.id"
             (onViewInDocs)="handleViewInDocs($event)"
+            (onSelect)="handleSelect($event)"
           ></app-template-card>
         }
       </div>

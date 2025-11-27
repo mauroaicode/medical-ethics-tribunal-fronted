@@ -54,4 +54,3 @@ export class ConfirmationDialogComponent {
     this.close.emit();
   }
 }
-

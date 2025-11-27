@@ -183,7 +183,7 @@ export class ProcessesListComponent {
     if (filters.status) {
       queryParams['status'] = filters.status;
     }
-    // Only include page in URL if explicitly requested (for initial load)
+
     if (includePage && page > 1) {
       queryParams['page'] = page.toString();
     }
@@ -191,7 +191,6 @@ export class ProcessesListComponent {
     const currentParams = this._activatedRoute.snapshot.queryParams;
     const paramsToRemove: Record<string, null> = {};
 
-    // Don't include 'page' in filterParamKeys - we don't want to manage it in URL
     const filterParamKeys = ['process_number', 'complainant_document_number', 'doctor_name', 'start_date', 'start_date_from', 'start_date_to', 'status'];
     filterParamKeys.forEach(key => {
       if (!queryParams[key] && currentParams[key]) {
@@ -199,15 +198,12 @@ export class ProcessesListComponent {
       }
     });
 
-    // Remove page param if it exists in URL but we don't want it
     if (currentParams['page'] && !includePage) {
       paramsToRemove['page'] = null;
     }
 
-    // Merge query params with removal params
     const finalParams = { ...queryParams, ...paramsToRemove };
 
-    // Update URL - params set to null will be removed
     this._router.navigate([], {
       relativeTo: this._activatedRoute,
       queryParams: finalParams,
@@ -262,11 +258,11 @@ export class ProcessesListComponent {
       }
     });
 
-    // Update query params (only for filters, not page)
     this._updateQueryParams(filters, false);
 
     this._processService.getProcesses(filters).subscribe({
       next: (response) => {
+
         this.processes.set(response.data);
         this.pagination.set({
           current_page: response.current_page,
@@ -297,7 +293,7 @@ export class ProcessesListComponent {
    */
   onResetFilters(): void {
     this.filterForm.reset();
-    // Clear all query params
+
     this._router.navigate([], {
       relativeTo: this._activatedRoute,
       queryParams: {
@@ -327,7 +323,17 @@ export class ProcessesListComponent {
    * Handle row click
    */
   onRowClick(process: Process): void {
-    this._router.navigate(['/admin/processes', process.id]);
+
+    if (!process.slug) {
+      console.error('Process slug is missing:', process);
+
+      if (process.id) {
+        this._router.navigate(['/admin/processes', process.id.toString()]);
+      }
+      return;
+    }
+
+    this._router.navigate(['/admin/processes', process.slug]).then();
   }
 
   /**

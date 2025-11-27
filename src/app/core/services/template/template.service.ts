@@ -2,7 +2,13 @@ import { inject, Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '@app/core/config/environment.config';
-import { Template, TemplateFilter, SyncTemplatesResponse } from '@app/core/models/template/template.model';
+import {
+  Template,
+  TemplateFilter,
+  SyncTemplatesResponse,
+  ProcessTemplate,
+  AssignTemplateRequest,
+} from '@app/core/models/template/template.model';
 
 @Injectable({
   providedIn: 'root',
@@ -36,6 +42,28 @@ export class TemplateService {
   syncTemplates(): Observable<SyncTemplatesResponse> {
     const url = `${environment.apiBaseUrl}/templates/sync`;
     return this._http.post<SyncTemplatesResponse>(url, {});
+  }
+
+  /**
+   * Get templates assigned to a process
+   *
+   * @param slug - Process slug
+   * @returns Observable with process templates array
+   */
+  getProcessTemplates(slug: string): Observable<ProcessTemplate[]> {
+    const url = `${environment.apiBaseUrl}/templates/process/${slug}`;
+    return this._http.get<ProcessTemplate[]>(url);
+  }
+
+  /**
+   * Assign template to process
+   *
+   * @param request - Assign template request
+   * @returns Observable with assigned template
+   */
+  assignTemplateToProcess(request: AssignTemplateRequest): Observable<ProcessTemplate> {
+    const url = `${environment.apiBaseUrl}/templates/assign-to-process`;
+    return this._http.post<ProcessTemplate>(url, request);
   }
 }
 

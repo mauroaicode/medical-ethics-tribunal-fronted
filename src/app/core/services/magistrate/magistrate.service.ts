@@ -20,4 +20,3 @@ export class MagistrateService {
     return this._http.get<Magistrate[]>(url);
   }
 }
-

@@ -1,0 +1,459 @@
+<div class="w-full space-y-6">
+  <!-- Page Header -->
+  <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+    <div>
+      <button
+        type="button"
+        class="btn btn-ghost btn-sm mb-2"
+        (click)="onBack()"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-5 w-5"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M10 19l-7-7m0 0l7-7m-7 7h18"
+          />
+        </svg>
+        {{ 'process.detail.back' | transloco }}
+      </button>
+      <h1 class="text-2xl font-bold text-base-content md:text-3xl">
+        {{ 'process.detail.title' | transloco }}
+      </h1>
+      @if (process()) {
+        <p class="mt-1 text-sm text-base-content/70">
+          {{ process()!.process_number }} - {{ process()!.name }}
+        </p>
+      }
+    </div>
+  </div>
+
+  <!-- Loading State -->
+  @if (loading()) {
+    <div class="flex justify-center items-center py-12">
+      <span class="loading loading-spinner loading-lg text-neutral"></span>
+    </div>
+  }
+
+  <!-- Error State -->
+  @if (error() && !loading()) {
+    <div class="alert alert-error">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="stroke-current shrink-0 h-6 w-6"
+        fill="none"
+        viewBox="0 0 24 24"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M10 14l-2-2m0 0l-2-2m2 2l2-2m-2 2l-2 2m6-8a9 9 0 11-18 0 9 9 0 0118 0z"
+        />
+      </svg>
+      <span>{{ error() | transloco }}</span>
+    </div>
+  }
+
+  <!-- Process Detail -->
+  @if (process() && !loading()) {
+    <div class="space-y-4">
+      <!-- General Information -->
+      <div class="collapse collapse-arrow bg-base-100 border border-base-300">
+        <input type="radio" name="process-accordion" checked="checked" />
+        <div class="collapse-title text-xl font-medium">
+          {{ 'process.detail.generalInfo' | transloco }}
+        </div>
+        <div class="collapse-content">
+          <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+            <div>
+              <span class="text-sm font-semibold text-base-content/70">{{ 'process.detail.processNumber' | transloco }}:</span>
+              <p class="text-base-content">{{ process()!.process_number }}</p>
+            </div>
+            <div>
+              <span class="text-sm font-semibold text-base-content/70">{{ 'process.detail.status' | transloco }}:</span>
+              <p class="text-base-content">
+                <span [class]="'badge ' + getStatusClass(process()!.status)">
+                  {{ process()!.status }}
+                </span>
+              </p>
+            </div>
+            <div>
+              <span class="text-sm font-semibold text-base-content/70">{{ 'process.detail.startDate' | transloco }}:</span>
+              <p class="text-base-content">{{ process()!.start_date | date: 'short' }}</p>
+            </div>
+            <div>
+              <span class="text-sm font-semibold text-base-content/70">{{ 'process.detail.name' | transloco }}:</span>
+              <p class="text-base-content">{{ process()!.name }}</p>
+            </div>
+            @if (process()!.description) {
+              <div class="md:col-span-2">
+                <span class="text-sm font-semibold text-base-content/70">{{ 'process.detail.description' | transloco }}:</span>
+                <p class="text-base-content">{{ process()!.description }}</p>
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+
+      <!-- Complainant Section -->
+      <div class="collapse collapse-arrow bg-base-100 border border-base-300 shadow-sm">
+        <input type="radio" name="process-accordion" />
+        <div class="collapse-title text-xl font-medium">
+          {{ 'process.detail.complainant' | transloco }}
+        </div>
+        <div class="collapse-content">
+          <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+            <div>
+              <span class="text-sm font-semibold text-base-content/70">{{ 'process.detail.fullName' | transloco }}:</span>
+              <p class="text-base-content">
+                {{ process()!.complainant.user.name }} {{ process()!.complainant.user.last_name }}
+              </p>
+            </div>
+            <div>
+              <span class="text-sm font-semibold text-base-content/70">{{ 'process.detail.email' | transloco }}:</span>
+              <p class="text-base-content">{{ process()!.complainant.user.email }}</p>
+            </div>
+            <div>
+              <span class="text-sm font-semibold text-base-content/70">{{ 'process.detail.documentType' | transloco }}:</span>
+              <p class="text-base-content">{{ process()!.complainant.user.document_type }}</p>
+            </div>
+            <div>
+              <span class="text-sm font-semibold text-base-content/70">{{ 'process.detail.documentNumber' | transloco }}:</span>
+              <p class="text-base-content">{{ process()!.complainant.user.document_number }}</p>
+            </div>
+            <div>
+              <span class="text-sm font-semibold text-base-content/70">{{ 'process.detail.phone' | transloco }}:</span>
+              <p class="text-base-content">{{ process()!.complainant.user.phone }}</p>
+            </div>
+            <div>
+              <span class="text-sm font-semibold text-base-content/70">{{ 'process.detail.address' | transloco }}:</span>
+              <p class="text-base-content">{{ process()!.complainant.user.address }}</p>
+            </div>
+            <div>
+              <span class="text-sm font-semibold text-base-content/70">{{ 'process.detail.municipality' | transloco }}:</span>
+              <p class="text-base-content">{{ process()!.complainant.municipality }}</p>
+            </div>
+            <div>
+              <span class="text-sm font-semibold text-base-content/70">{{ 'process.detail.city' | transloco }}:</span>
+              <p class="text-base-content">{{ process()!.complainant.city.name }}</p>
+            </div>
+            @if (process()!.complainant.company) {
+              <div>
+                <span class="text-sm font-semibold text-base-content/70">{{ 'process.detail.company' | transloco }}:</span>
+                <p class="text-base-content">{{ process()!.complainant.company }}</p>
+              </div>
+            }
+            <div>
+              <span class="text-sm font-semibold text-base-content/70">{{ 'process.detail.isAnonymous' | transloco }}:</span>
+              <p class="text-base-content">
+                <span [class]="'badge ' + (process()!.complainant.is_anonymous ? 'badge-warning' : 'badge-success')">
+                  {{ process()!.complainant.is_anonymous ? ('process.detail.yes' | transloco) : ('process.detail.no' | transloco) }}
+                </span>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Doctor Section -->
+      <div class="collapse collapse-arrow bg-base-100 border border-base-300 shadow-sm">
+        <input type="radio" name="process-accordion" />
+        <div class="collapse-title text-xl font-medium">
+          {{ 'process.detail.doctor' | transloco }}
+        </div>
+        <div class="collapse-content">
+          <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+            <div>
+              <span class="text-sm font-semibold text-base-content/70">{{ 'process.detail.fullName' | transloco }}:</span>
+              <p class="text-base-content">
+                {{ process()!.doctor.user.name }} {{ process()!.doctor.user.last_name }}
+              </p>
+            </div>
+            <div>
+              <span class="text-sm font-semibold text-base-content/70">{{ 'process.detail.email' | transloco }}:</span>
+              <p class="text-base-content">{{ process()!.doctor.user.email }}</p>
+            </div>
+            <div>
+              <span class="text-sm font-semibold text-base-content/70">{{ 'process.detail.documentType' | transloco }}:</span>
+              <p class="text-base-content">{{ process()!.doctor.user.document_type }}</p>
+            </div>
+            <div>
+              <span class="text-sm font-semibold text-base-content/70">{{ 'process.detail.documentNumber' | transloco }}:</span>
+              <p class="text-base-content">{{ process()!.doctor.user.document_number }}</p>
+            </div>
+            <div>
+              <span class="text-sm font-semibold text-base-content/70">{{ 'process.detail.phone' | transloco }}:</span>
+              <p class="text-base-content">{{ process()!.doctor.user.phone }}</p>
+            </div>
+            <div>
+              <span class="text-sm font-semibold text-base-content/70">{{ 'process.detail.address' | transloco }}:</span>
+              <p class="text-base-content">{{ process()!.doctor.user.address }}</p>
+            </div>
+            <div>
+              <span class="text-sm font-semibold text-base-content/70">{{ 'process.detail.specialty' | transloco }}:</span>
+              <p class="text-base-content">{{ process()!.doctor.specialty.name }}</p>
+            </div>
+            <div>
+              <span class="text-sm font-semibold text-base-content/70">{{ 'process.detail.faculty' | transloco }}:</span>
+              <p class="text-base-content">{{ process()!.doctor.faculty }}</p>
+            </div>
+            <div>
+              <span class="text-sm font-semibold text-base-content/70">{{ 'process.detail.medicalRegistrationNumber' | transloco }}:</span>
+              <p class="text-base-content">{{ process()!.doctor.medical_registration_number }}</p>
+            </div>
+            <div>
+              <span class="text-sm font-semibold text-base-content/70">{{ 'process.detail.medicalRegistrationPlace' | transloco }}:</span>
+              <p class="text-base-content">{{ process()!.doctor.medical_registration_place }}</p>
+            </div>
+            <div>
+              <span class="text-sm font-semibold text-base-content/70">{{ 'process.detail.medicalRegistrationDate' | transloco }}:</span>
+              <p class="text-base-content">{{ process()!.doctor.medical_registration_date | date: 'short' }}</p>
+            </div>
+            <div>
+              <span class="text-sm font-semibold text-base-content/70">{{ 'process.detail.mainPracticeCompany' | transloco }}:</span>
+              <p class="text-base-content">{{ process()!.doctor.main_practice_company }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Magistrate Instructor Section -->
+      <div class="collapse collapse-arrow bg-base-100 border border-base-300 shadow-sm">
+        <input type="radio" name="process-accordion" />
+        <div class="collapse-title text-xl font-medium">
+          {{ 'process.detail.magistrateInstructor' | transloco }}
+        </div>
+        <div class="collapse-content">
+          <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+            <div>
+              <span class="text-sm font-semibold text-base-content/70">{{ 'process.detail.fullName' | transloco }}:</span>
+              <p class="text-base-content">
+                {{ process()!.magistrate_instructor.user.name }} {{ process()!.magistrate_instructor.user.last_name }}
+              </p>
+            </div>
+            <div>
+              <span class="text-sm font-semibold text-base-content/70">{{ 'process.detail.email' | transloco }}:</span>
+              <p class="text-base-content">{{ process()!.magistrate_instructor.user.email }}</p>
+            </div>
+            <div>
+              <span class="text-sm font-semibold text-base-content/70">{{ 'process.detail.documentType' | transloco }}:</span>
+              <p class="text-base-content">{{ process()!.magistrate_instructor.user.document_type }}</p>
+            </div>
+            <div>
+              <span class="text-sm font-semibold text-base-content/70">{{ 'process.detail.documentNumber' | transloco }}:</span>
+              <p class="text-base-content">{{ process()!.magistrate_instructor.user.document_number }}</p>
+            </div>
+            <div>
+              <span class="text-sm font-semibold text-base-content/70">{{ 'process.detail.phone' | transloco }}:</span>
+              <p class="text-base-content">{{ process()!.magistrate_instructor.user.phone }}</p>
+            </div>
+            <div>
+              <span class="text-sm font-semibold text-base-content/70">{{ 'process.detail.address' | transloco }}:</span>
+              <p class="text-base-content">{{ process()!.magistrate_instructor.user.address }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Magistrate Ponente Section -->
+      <div class="collapse collapse-arrow bg-base-100 border border-base-300 shadow-sm">
+        <input type="radio" name="process-accordion" />
+        <div class="collapse-title text-xl font-medium">
+          {{ 'process.detail.magistratePonente' | transloco }}
+        </div>
+        <div class="collapse-content">
+          <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+            <div>
+              <span class="text-sm font-semibold text-base-content/70">{{ 'process.detail.fullName' | transloco }}:</span>
+              <p class="text-base-content">
+                {{ process()!.magistrate_ponente.user.name }} {{ process()!.magistrate_ponente.user.last_name }}
+              </p>
+            </div>
+            <div>
+              <span class="text-sm font-semibold text-base-content/70">{{ 'process.detail.email' | transloco }}:</span>
+              <p class="text-base-content">{{ process()!.magistrate_ponente.user.email }}</p>
+            </div>
+            <div>
+              <span class="text-sm font-semibold text-base-content/70">{{ 'process.detail.documentType' | transloco }}:</span>
+              <p class="text-base-content">{{ process()!.magistrate_ponente.user.document_type }}</p>
+            </div>
+            <div>
+              <span class="text-sm font-semibold text-base-content/70">{{ 'process.detail.documentNumber' | transloco }}:</span>
+              <p class="text-base-content">{{ process()!.magistrate_ponente.user.document_number }}</p>
+            </div>
+            <div>
+              <span class="text-sm font-semibold text-base-content/70">{{ 'process.detail.phone' | transloco }}:</span>
+              <p class="text-base-content">{{ process()!.magistrate_ponente.user.phone }}</p>
+            </div>
+            <div>
+              <span class="text-sm font-semibold text-base-content/70">{{ 'process.detail.address' | transloco }}:</span>
+              <p class="text-base-content">{{ process()!.magistrate_ponente.user.address }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Template Documents Section -->
+      <div class="card bg-base-100 shadow-sm">
+        <div class="card-body">
+          <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between mb-4">
+            <h2 class="card-title text-lg">{{ 'process.detail.templateDocuments' | transloco }}</h2>
+            <button
+              type="button"
+              class="btn btn-neutral btn-sm"
+              (click)="onAssignTemplate()"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-4 w-4"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M12 4v16m8-8H4"
+                />
+              </svg>
+              {{ 'process.detail.assignTemplate' | transloco }}
+            </button>
+          </div>
+
+          <!-- Loading Templates -->
+          @if (loadingTemplates()) {
+            <div class="flex justify-center items-center py-8">
+              <span class="loading loading-spinner loading-lg text-neutral"></span>
+            </div>
+          }
+
+          <!-- Empty State -->
+          @if (!loadingTemplates() && processTemplates().length === 0) {
+            <div class="text-center py-8">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-16 w-16 mx-auto text-base-content/30 mb-4"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                />
+              </svg>
+              <p class="text-base-content/70">{{ 'process.detail.noTemplates' | transloco }}</p>
+            </div>
+          }
+
+          <!-- Templates Grid -->
+          @if (!loadingTemplates() && processTemplates().length > 0) {
+            <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+              @for (processTemplate of processTemplates(); track processTemplate.id) {
+                <div class="card bg-base-200 shadow-md hover:shadow-lg transition-shadow">
+                  <div class="card-body">
+                    <div class="flex items-start gap-3 mb-3">
+                      <div class="flex-shrink-0">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          class="h-8 w-8 text-info"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                          />
+                        </svg>
+                      </div>
+                      <div class="flex-1 min-w-0">
+                        <h3 class="card-title text-base text-info-content line-clamp-2 break-words">
+                          {{ processTemplate.template.name }}
+                        </h3>
+                      </div>
+                    </div>
+
+                    @if (processTemplate.template.description) {
+                      <p class="text-sm text-base-content/70 line-clamp-2 mb-3">
+                        {{ processTemplate.template.description }}
+                      </p>
+                    }
+
+                    <div class="text-xs text-base-content/50 mb-4">
+                      <span class="font-semibold">{{ 'templates.card.createdAt' | transloco }}:</span>
+                      <span class="ml-1">{{ processTemplate.file_name }}</span>
+                    </div>
+
+                    <div class="card-actions justify-end gap-2">
+                      @if (processTemplate.document_url) {
+                        <a
+                          [href]="processTemplate.document_url"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          class="btn btn-neutral btn-sm"
+                        >
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="h-4 w-4"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                          >
+                            <path
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke-width="2"
+                              d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                            />
+                          </svg>
+                          {{ 'templates.card.viewInDocs' | transloco }}
+                        </a>
+                      }
+                    </div>
+                  </div>
+                </div>
+              }
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+  }
+
+  <!-- Assign Template Modal -->
+  <app-assign-template-modal
+    [isOpen]="isAssignModalOpen()"
+    [processId]="process()?.id ?? null"
+    [shouldAssign]="shouldAssign()"
+    (onClose)="onCloseAssignModal()"
+    (onAssign)="onTemplateSelected($event)"
+    (onAssignSuccess)="onAssignSuccess()"
+  ></app-assign-template-modal>
+
+  <!-- Confirmation Dialog -->
+  <app-confirmation-dialog
+    [isOpen]="isConfirmDialogOpen()"
+    [title]="'process.detail.assignTemplate' | transloco"
+    [message]="'process.detail.confirmAssign' | transloco"
+    [confirmLabel]="'process.detail.assign' | transloco"
+    [cancelLabel]="'generics.cancel' | transloco"
+    [confirmButtonClass]="'btn-neutral'"
+    (confirm)="onConfirmAssign()"
+    (cancel)="onCancelAssign()"
+    (close)="onCancelAssign()"
+  ></app-confirmation-dialog>
+</div>
+
